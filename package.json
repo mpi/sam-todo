@@ -1,0 +1,62 @@
+{
+  "name": "SAM",
+  "version": "0.0.0",
+  "author": "mpi",
+  "private": true,
+  "contributors": [
+    {
+      "name": "mpi"
+    }
+  ],
+  "main": "src/app.js",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "jquery": "^2.2.3",
+    "lodash": "^4.12.0",
+    "virtual-dom": "^2.1.1"
+  },
+  "devDependencies": {
+    "brfs": "^1.4.3",
+    "browserify": "12.0.1",
+    "browserify-shim": "^3.8.12",
+    "jasmine": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-brackets": "^0.2.1",
+    "karma-browserify": "^5.0.5",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-source-map-support": "^1.1.0",
+    "karma-spec-reporter": "0.0.26",
+    "live-server": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "npm-run-all": "^1.4.0",
+    "phantomjs-prebuilt": "^2.1.7",
+    "simulant": "^0.2.2",
+    "uglify-js": "2.6.1",
+    "watchify": "^3.6.1"
+  },
+  "scripts": {
+    "build-debug": "mkdirp js && browserify src/app.js --outfile js/app.js",
+    "watch:js": "mkdirp js && watchify src/app.js --outfile js/app.js -dv",
+    "serve": "live-server --proxy=/api:http://localhost:5000/api ./",
+    "server": "node src/server.js",
+    "uglify": "uglifyjs js/app.js -o js/app.min.js",
+    "build": "npm run build-debug && npm run uglify",
+    "start": "npm-run-all --parallel watch:js serve server",
+    "test": "karma start",
+    "test:watch": "karma start --no-single-run --auto-watch"
+  },
+  "browser": {
+    "jquery": "./node_modules/jquery/dist/jquery.js"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "external": "global:External"
+  }
+}
